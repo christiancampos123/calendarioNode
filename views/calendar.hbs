@@ -1,0 +1,188 @@
+<link rel="script" href="../routes/calendar.js">
+<h2>Calendar</h2>
+
+<button onclick="boton1()">bopton</button>
+
+<script>
+    function isonline() {
+        var uri = 'http://localhost:3000/calendar'
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", uri, false);
+        xhr.send(null);
+        if (xhr.status == 200) {
+            //is online
+            //document.getElementById("h5").style.color = "blue";
+            return xhr.responseText;
+        }
+        else {
+            //is offline
+
+            return null;
+        }
+    }
+</script>
+
+<h5 id="h5">Online</h5>
+<script>
+    if (isonline()) {
+        document.getElementById("h5").style.color = "#00bb00"
+    } else {
+    }
+</script>
+<script>
+    setInterval(function () {
+        document.getElementById("h5").style.color = "red"
+    }, 8400);
+</script>
+<script>
+    //function to reload info every 5sec if the navigator is online, else
+    //it displays the information done.
+    setInterval(function () {
+        if (navigator.onLine && isonline()) {
+            location.reload();
+
+        }
+    }, 5200); // 120000 ~> 2 minutes 5000 ~> 5 seconds 
+    console.log("reinicio");
+
+
+</script>
+
+<table class="table">
+    <thead class="thead-light">
+        <th scope="col">Subject</th>
+        <th scope="col">Start</th>
+        <th scope="col">End</th>
+        <th scope="col">Crated Time</th>
+    </thead>
+
+    <tbody>
+        {{#each events}}
+        <tr>
+            <script>
+                var x = "{{this.start.dateTime}}";
+                console.log("nuevo " + "{{this.start.dateTime}}");
+                x.toString();
+                console.log("start =" + x);
+                var year = x.substr(0, 4);
+                var month = x.substr(5, 2);
+                var day = x.substr(8, 2);
+                var hour = x.substr(11, 5);
+                var hour1 = x.substr(11, 2);
+                var hour2 = x.substr(13, 3);
+                //console.log("hola soy hour: " + (parseInt(hour1) + 1));
+                //console.log(year, month, day, (parseInt(hour1) + 1) + hour2);
+                var hour3 = parseInt(hour1) + 2;
+                var hour4 = hour3 + hour2;
+                console.log("cadena caracteres: " + hour4.length);
+                if (hour4.length < 5) {
+                    hour4 = "0" + hour4;
+                }
+                //console.log("hola soy hour4: " + hour4);
+            </script>
+            <script>
+                //document.write(day + "/" + month + "/" + year + "  -   ")
+                var hoy = new Date();
+                var dd = hoy.getDate();
+                if (dd < 10) {
+                    dd = "0" + dd;
+                }
+                var mm = hoy.getMonth() + 1;
+                if (mm < 10) {
+                    mm = "0" + mm;
+                }
+                var yy = hoy.getFullYear();
+                var hh = hoy.getHours();
+                if (hh < 10) {
+                    hh = "0" + hh;
+                }
+
+                //comparador
+                console.log("hola soy hour4: " + hour4);
+                console.log("Este es el dia " + yy + "" + mm + "" + dd + "" + hh);
+                console.log("Dia cita" + year + "" + month + "" + day + "" + hour4.substr(0, 2));
+                var day1 = yy + "" + mm + "" + dd + "" + hh;
+                var day2 = year + "" + month + "" + day + "" + hour4.substr(0, 2);
+                var caducado;
+                if (day1 > day2) {
+                    console.log("ha caducado");
+                    caducado = true;
+                } else {
+                    caducado = false;
+                    console.log("NOOO ha caducado");
+                }
+
+            </script>
+
+            <td class="subj">{{this.subject}}
+                <font color="red">
+                    <script>
+                        if (!caducado) {
+
+                        } else {
+                            document.write("(Ended)");
+                        }
+                    </script>
+                </font>
+            </td>
+            <script>console.log("{{this.createdDateTime}}" + "  time");</script>
+            <script>console.log("{{this.meeting}}" + "  autor");</script>
+            <td>
+                <script>document.write(day + "/" + month + "/" + year + "  -     ")
+                </script>
+                <font color="light-blue">
+                    <script>document.write(hour4)</script>
+                </font>
+                <!--({{this.start.timeZone}})-->
+            </td>
+            <script>
+                var x = "{{this.end.dateTime}}";
+                x.toString();
+                console.log(x);
+                var year = x.substr(0, 4);
+                var month = x.substr(2, 2);
+                var day = x.substr(8, 2);
+                var hour = x.substr(11, 5);
+                var hour1 = x.substr(11, 2);
+                var hour2 = x.substr(13, 3);
+                //console.log("hola soy hour: " + (parseInt(hour1) + 1));
+                //console.log(year, month, day, (parseInt(hour1) + 1) + hour2);
+                var hour3 = parseInt(hour1) + 1;
+                var hour4 = hour3 + hour2;
+            </script>
+            <td>
+                <script>document.write(day + "/" + month + "/" + year + "  -   ")
+                </script>
+                <font color="light-blue">
+                    <script>document.write("   " + hour4)</script>
+                </font>
+                <!--({{this.start.timeZone}})-->
+            </td>
+            <td>
+
+                <script>
+                    var x = "{{this.createdDateTime}}";
+                    x.toString();
+                    console.log(x);
+                    var year = x.substr(0, 4);
+                    var month = x.substr(5, 2);
+                    var day = x.substr(8, 2);
+                    var hour = x.substr(11, 5);
+                    var hour1 = x.substr(11, 2);
+                    var hour2 = x.substr(13, 3);
+                    //console.log("hola soy hour: " + (parseInt(hour1) + 1));
+                    //console.log(year, month, day, (parseInt(hour1) + 1) + hour2);
+                    var hour3 = parseInt(hour1) + 1;
+                    var hour4 = hour3 + hour2;
+                </script>
+
+                <font color="light-blue">
+                    <script>document.write("   " + hour4)</script>
+                </font>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+
+
+</table>
